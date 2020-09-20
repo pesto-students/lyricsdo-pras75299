@@ -2,3 +2,64 @@
     margin: 0px;
     padding: 0px;
 }
+body{font-family: 'Poppins', sans-serif;box-sizing: border-box;}
+
+.main-section{
+    width: 100%;
+    margin: 0 auto;
+    background-color: rebeccapurple;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+}
+.main-section header{
+    background: url(./assets/music-bg.jpg) center center no-repeat;
+    background-size: cover;
+    height: 350px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+.container{
+    max-width: 80%;
+    margin: 0 auto;
+}
+h1{
+    font-size: 22px;
+    line-height: 30px;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.input-control{
+    width: 300px;
+    height: 34px;
+    border-radius: 4px;
+    padding: 10px;
+    line-height: 34px;
+    color: #222;
+    box-shadow: #fff 0 0 4px;
+    border: none;
+    font-family: inherit;
+}
+.input-control:focus{
+    outline: none;
+}
+.btn{
+    height: 34px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 4px;
+    background: white;
+    color: rebeccapurple;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    display: inline;
+}
+.btn:focus{
+    outline: none;
+}
