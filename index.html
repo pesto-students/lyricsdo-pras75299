@@ -4,24 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LyricsDo- Lyrics Finder App</title>
-    <!-- css starts here -->
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- css ends here -->
 </head>
 <body>
     <section class="main-section">
         <header>
-            <div class="container">
+            <form class="container" id="lyricsDo">
                 <h1>LyricsDo</h1>
-                <input type="search" class="input-control" placeholder="Search"/>
-                <button class="btn" id="btn">Search</button>
-            </div>
+                <input type="text" id="searchlyrics" class="input-control" placeholder="Search"/>
+                <button type="button" class="btn" id="btn" onclick="onChange()">Search</button>
+            </form>
         </header>
+        <ul class="lyricsResult" id="lyricsResult">
+            
+        </ul>
+        <div id="lyrics">
+            <!-- <h2 id="lyricsTitle">Lyrics : </h2>
+                <p id="lyricsArtist"><b>Artist : </b></p>
+                <p id="lyricsAlbum"><b>Album : </b></p>
+
+                <pre id = "lyricsText">
+    
+                </pre> -->
+        </div>
     </section>
 
-    <!-- javascript starts here -->
     <script src="./scripts.js"></script>
-    <!-- javascript ends here -->
 </body>
 </html>
