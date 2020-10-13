@@ -42,14 +42,18 @@ function suggestions() {
       removeResults();
       let html;
         data.data.forEach(function(item){
-            html += `
-                  <li>
-                    <a href="#" onclick="getLyrics()">
-                      <p>Artist Name: ${item.artist.name}</p>
-                      <p>Title: ${item.title}</p>
+            if(item !== undefined){
+              html += `<li>
+                    <div class="album-image">
+                      <img src="${item.album.cover_medium !== null ? item.album.cover_medium : './assets/default-placeholder-image.png'}"/>
+                    </div>
+                    <a href="#" onclick="getLyrics(artist, title)">
+                      <p><span>Artist Name:</span> ${item.artist.name}</p>
+                      <p><span>Album Name:</span> ${item.album.title}</p>
+                      <p><span>Title:</span> ${item.title}</p>
                     </a>
-                  </li>
-            `;
+                  </li>`;
+            }
         });
         results.innerHTML = html;
       console.log(data.data);      
@@ -58,8 +62,8 @@ function suggestions() {
 
 
 function getLyrics(artist, title) {
-  loadJSON(apiUrl + artist + '/' + title, function(fullLyrics){
-    console.log(fullLyrics.data);
+  loadJSON(apiUrl + '/' + artist + '/' + title, function(data1){
+    console.log(data1.data);
   })
 }
 
