@@ -1,99 +1,149 @@
 const searchLyrics = document.getElementById("searchlyrics");
-const form = document.getElementById('lyricsDo');
+const form = document.getElementById("lyricsDo");
 const results = document.getElementById("lyricsResult");
-const apiUrl = "https://api.lyrics.ovh";
+const apiUrl = "https://api.lyrics.ovh/v1/";
+const suggestionsBaseURL = 'https://api.lyrics.ovh/suggest/';
 const lyricsDiv = document.getElementById("lyrics");
+const recommedSection = document.getElementById("lyricsRecommendation");
 let timeoutSuggest;
 
-form.addEventListener('submit', (e) => {
-	e.preventDefault();
-	
+if (document.readyState) {
+  showRecommendations("In the Night");
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
   checkInputs();
   onChange();
 });
 
 function checkInputs() {
   const searchValue = searchLyrics.value.trim();
-  if(searchValue === '') {
-		setErrorFor(searchLyrics, 'Search Lyrics cannot be blank');
-	} else {
-		setSuccessFor(searchLyrics);
-	}
+  if (searchValue === "") {
+    setErrorFor(searchLyrics, "Search Lyrics cannot be blank");
+  } else {
+    setSuccessFor(searchLyrics);
+  }
 }
 
 function setErrorFor(input, message) {
-	const formGroup = input.parentElement;
-	const small = formGroup.querySelector('small');
-	formGroup.className = 'form-group error';
-	small.innerText = message;
+  const formGroup = input.parentElement;
+  const small = formGroup.querySelector("small");
+  formGroup.className = "form-group error";
+  small.innerText = message;
 }
 
 function setSuccessFor(input) {
-	const formGroup = input.parentElement;
-	formGroup.className = 'form-group success';
-}
-
-function removeResults() {
-   // results.remove(".lyricsResult");
+  const formGroup = input.parentElement;
+  formGroup.className = "form-group success";
 }
 
 function onChange() {
-    timeoutSuggest = setTimeout(suggestions, 300);
+  timeoutSuggest = setTimeout(suggestions, 300);
 }
-
 
 function loadJSON(path, success, error) {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                success(JSON.parse(xhr.responseText));
-            } else {
-                if (error)
-                    error(xhr);
-            }
-        }
-    };
-    xhr.open("GET", path, true);
-    xhr.send();
-}
-function getLyrics(artist, title) {  
-  const lyricsUrl = apiUrl + '/' + artist + '/' + title;
-  loadJSON(lyricsUrl, function(data) {
-    console.log('get lyrics')
-  console.log(data);
-})
+  let xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        success(JSON.parse(xhr.responseText));
+      } else {
+        if (error) error(xhr);
+      }
+    }
+  };
+  xhr.open("GET", path, true);
+  xhr.send();
 }
 
 function suggestions() {
-    let inputValue = searchLyrics.value;
-    if (!inputValue) {
-      removeResults();
-      return;
+  recommedSection.innerHTML = "";
+  let inputValue = searchLyrics.value;
+  if (!inputValue) {
+    return;
+  }
+  const suggestionsUrl = suggestionsBaseURL + inputValue;
+  loadJSON(suggestionsUrl, function (data) {
+    let html = "";
+    if (data.data.length === 0) {
+      alert("No result Found, Please search for something else.");
     }
-    loadJSON(apiUrl + "/suggest/" + inputValue, function (data) {
-      removeResults();
-      let html;
-        data.data.forEach(function(item){
-            if(item !== undefined){
-              html += `<li>
+    data.data.forEach(function (item) {
+      if (item !== undefined) {
+        html += `<li>
                     <div class="album-image">
-                      <img src="${item.album.cover_medium !== null ? item.album.cover_medium : './assets/default-placeholder-image.png'}"/>
+                      <img src="${
+                        item.album.cover_medium !== null
+                          ? item.album.cover_medium
+                          : "./assets/default-placeholder-image.png"
+                      }"/>
                     </div>
-                    <a href="#" onclick="${getLyrics(item.artist.name, item.artist.title)}">
+                    <a href="#">
                       <p><span>Artist Name:</span> ${item.artist.name}</p>
                       <p><span>Album Name:</span> ${item.album.title}</p>
-                      <p><span>Title:</span> ${item.title}</p>
+                      <p><span>Title:</span> ${item.title}</p>                      
                     </a>
+                    <button class="lyricsBtn" onclick="${getLyrics(item.artist.name, item.title)}">View Lyrics</button>
                   </li>`;
-            }
-        });
-        results.innerHTML = html;
-      //console.log(data.data);      
+      }
     });
+    results.innerHTML = html;
+  });
 }
 
+function showRecommendations(song) {
+  const recommandationUrl = suggestionsBaseURL + song;
+  loadJSON(recommandationUrl, function (data) {
+    let html = "";
+    data.data.forEach(function (listOfRecommendations) {
+      if (
+        listOfRecommendations !== undefined ||
+        listOfRecommendations !== null
+      ) {
+        if (
+          listOfRecommendations.album.title !== undefined &&
+          listOfRecommendations.title !== undefined &&
+          listOfRecommendations.artist.name !== undefined
+        ) {
+          html += `<li>
+                    <div class="album-image">
+                      <img src="${
+                        listOfRecommendations.album.cover_medium !== null
+                          ? listOfRecommendations.album.cover_medium
+                          : "./assets/default-placeholder-image.png"
+                      }"/>
+                    </div>
+                    <a href="#">
+                      <p><span>Artist Name:</span> ${
+                        listOfRecommendations.artist.name
+                      }</p>
+                      <p><span>Album Name:</span> ${
+                        listOfRecommendations.album.title
+                      }</p>
+                      <p><span>Title:</span> ${listOfRecommendations.title}</p>                      
+                    </a>
+                    <button class="lyricsBtn" onclick="${getLyrics(listOfRecommendations.artist.name, listOfRecommendations.title)}">View Lyrics</button>
+                  </li>`;
+        }
+      }
+    });
+    recommedSection.innerHTML = html;
+  });
+}
 
+function getLyrics(artist, title) {
+  console.log({artist, title});
+  recommedSection.innerHTML = "";
+  results.innerHTML = "";
+  const lyricsUrl = apiUrl + artist + "/" + title;
+  loadJSON(lyricsUrl, function(data) {
+    if(data.lyrics !== ''){
+      lyricsDiv.innerHTML +=  `<pre>${data.lyrics}</pre>`
+    } else {
+      lyricsDiv.innerHTML += `<pre>Lyrics is not available for this song</pre>`
+    }
 
-
-
+  });
+}
