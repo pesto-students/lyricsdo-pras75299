@@ -2,7 +2,7 @@ const searchLyrics = document.getElementById("searchlyrics");
 const form = document.getElementById("lyricsDo");
 const results = document.getElementById("lyricsResult");
 const apiUrl = "https://api.lyrics.ovh/v1/";
-const suggestionsBaseURL = 'https://api.lyrics.ovh/suggest/';
+const suggestionsBaseURL = "https://api.lyrics.ovh/suggest/";
 const lyricsDiv = document.getElementById("lyrics");
 const recommedSection = document.getElementById("lyricsRecommendation");
 let timeoutSuggest;
@@ -17,6 +17,8 @@ form.addEventListener("submit", (e) => {
   checkInputs();
   onChange();
 });
+
+
 
 function checkInputs() {
   const searchValue = searchLyrics.value.trim();
@@ -43,20 +45,6 @@ function onChange() {
   timeoutSuggest = setTimeout(suggestions, 300);
 }
 
-function loadJSON(path, success, error) {
-  let xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        success(JSON.parse(xhr.responseText));
-      } else {
-        if (error) error(xhr);
-      }
-    }
-  };
-  xhr.open("GET", path, true);
-  xhr.send();
-}
 
 function suggestions() {
   recommedSection.innerHTML = "";
@@ -65,12 +53,20 @@ function suggestions() {
     return;
   }
   const suggestionsUrl = suggestionsBaseURL + inputValue;
-  loadJSON(suggestionsUrl, function (data) {
+  fetch(suggestionsUrl)
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      Promise.reject('Something went wrong')
+    }
+  })
+  .then(dataSuggestions => {
     let html = "";
-    if (data.data.length === 0) {
+    if (dataSuggestions.data.length === 0) {
       alert("No result Found, Please search for something else.");
     }
-    data.data.forEach(function (item) {
+    dataSuggestions.data.forEach(function (item) {
       if (item !== undefined) {
         html += `<li>
                     <div class="album-image">
@@ -83,21 +79,33 @@ function suggestions() {
                     <a href="#">
                       <p><span>Artist Name:</span> ${item.artist.name}</p>
                       <p><span>Album Name:</span> ${item.album.title}</p>
-                      <p><span>Title:</span> ${item.title}</p>                      
+                      <p><span>Title:</span> ${
+                        item.title
+                      }</p>                      
                     </a>
-                    <button class="lyricsBtn" onclick="${getLyrics(item.artist.name, item.title)}">View Lyrics</button>
+                    <button class="lyricsBtn">View Lyrics</button>
                   </li>`;
       }
     });
     results.innerHTML = html;
-  });
+  })
+  .catch(error => console.log('error is', error));
+  
 }
 
 function showRecommendations(song) {
   const recommandationUrl = suggestionsBaseURL + song;
-  loadJSON(recommandationUrl, function (data) {
+  fetch(recommandationUrl)
+  .then(response => {
+    if(response.ok) {
+      return response.json()
+    } else {
+      Promise.reject('Something went wrong')
+    }
+  })
+  .then(dataRecommand => {
     let html = "";
-    data.data.forEach(function (listOfRecommendations) {
+    dataRecommand.data.forEach(function (listOfRecommendations) {
       if (
         listOfRecommendations !== undefined ||
         listOfRecommendations !== null
@@ -122,28 +130,36 @@ function showRecommendations(song) {
                       <p><span>Album Name:</span> ${
                         listOfRecommendations.album.title
                       }</p>
-                      <p><span>Title:</span> ${listOfRecommendations.title}</p>                      
+                      <p><span>Title:</span> ${
+                        listOfRecommendations.title
+                      }</p>                      
                     </a>
-                    <button class="lyricsBtn" onclick="${getLyrics(listOfRecommendations.artist.name, listOfRecommendations.title)}">View Lyrics</button>
+                    <button class="lyricsBtn" onclick="${getLyrics(listOfRecommendations.artist.name,
+                      listOfRecommendations.title)}">View Lyrics</button>
                   </li>`;
         }
       }
     });
     recommedSection.innerHTML = html;
-  });
+  })
+  .catch(error => console.log('error is', error));
 }
 
 function getLyrics(artist, title) {
-  console.log({artist, title});
+  console.log({ artist, title });
   recommedSection.innerHTML = "";
   results.innerHTML = "";
   const lyricsUrl = apiUrl + artist + "/" + title;
-  loadJSON(lyricsUrl, function(data) {
-    if(data.lyrics !== ''){
-      lyricsDiv.innerHTML +=  `<pre>${data.lyrics}</pre>`
+  fetch(lyricsUrl)
+  .then(response => {
+    if(response.ok) {
+      return response.json()
     } else {
-      lyricsDiv.innerHTML += `<pre>Lyrics is not available for this song</pre>`
+      Promise.reject('Something went wrong')
     }
-
-  });
+  })
+  .then(data => {
+   console.log(`<pre>${data.lyrics}</pre>`)
+  })
+  .catch(error => console.log('error is', error));
 }
