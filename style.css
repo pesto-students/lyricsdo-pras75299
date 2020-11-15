@@ -1,0 +1,197 @@
+*, body{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    background-color: #e0e0e0;
+}
+
+.main-section{
+    width: 100%;
+    margin: 0 auto;
+    background-color: rebeccapurple;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+}
+.main-section header{
+    background: url(./assets/music-bg.jpg) center center no-repeat;
+    background-size: cover;
+    height: 350px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+.container{
+    max-width: 80%;
+    margin: 0 auto;
+}
+h1{
+    font-size: 45px;
+    line-height: 30px;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+p{
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.form-combine{
+    display: flex;
+}
+.form-group{
+    margin-bottom: 10px;
+	padding-bottom: 20px;
+	position: relative;
+}
+
+.form-group label {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+.input-control{
+    width: 450px;
+    height: 45px;
+    border-radius: 4px;
+    padding: 10px;
+    line-height: 34px;
+    color: #222;
+    box-shadow: #fff 0 0 4px;
+    border: none;
+    font-family: inherit;    
+    box-sizing: border-box;
+    margin-right: 10px;
+    font-size: 18px;
+    border: 2px solid #f0f0f0;
+}
+.input-control:focus{
+    outline: 0;
+	border-color: #777;
+}
+.form-group.success input {
+	border-color: #2ecc71;
+}
+.form-group.error input {
+	border-color: #e74c3c;
+}
+.form-group i {
+	visibility: hidden;
+	position: absolute;
+	top: 15px;
+    right: 20px;
+}
+.form-group.success i.fa-check-circle {
+	color: #2ecc71;
+	visibility: visible;
+}
+
+.form-group.error i.fa-exclamation-circle {
+	color: #e74c3c;
+	visibility: visible;
+}
+
+.form-group small {
+	color: #e74c3c;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	visibility: hidden;
+}
+
+.form-group.error small {
+	visibility: visible;
+}
+.btn{
+    height: 45px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 4px;
+    background: white;
+    color: rebeccapurple;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 18px;
+    display: inline;
+}
+.btn:focus{
+    outline: none;
+}
+.lyricsResult{
+    background-color: #e0e0e0;
+    color: #222;
+    list-style: none;
+    margin: 0px auto;
+    padding: 80px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.pt-0{
+    padding-top: 0px !important;
+}
+
+.lyricsResult li{
+    display: inline-block;
+    background-color: #fff;
+    width: 20%;
+    height: 255px;
+    border-radius: 4px;
+    margin: 0 20px 80px 0;
+    color: #222;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: #a7a7a7 0 1px 7px;
+    position: relative;
+}
+.lyricsResult li button{
+    height: 45px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 4px;
+    background: white;
+    color: rebeccapurple;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: #a7a7a7 0 3px 5px;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+}
+
+.lyricsResult li a{
+    text-decoration: none;
+    color: #222;
+}
+.lyricsResult li a p{
+    font-size: 14px;
+    text-align: left;
+    margin: 0 0 10px 0;
+}
+.lyricsResult li a p span{
+    font-weight: bold;
+}
+.album-image img{
+    width: 120px;
+    margin: -71px auto 15px auto;
+    text-align: center;
+    display: flex;
+    height: 120px;
+    border-radius: 50%;
+}

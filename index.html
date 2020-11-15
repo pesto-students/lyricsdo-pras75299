@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LyricsDo- Lyrics Finder App</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+</head>
+<body>
+    <section class="main-section">
+        <header>
+            <form class="container" id="lyricsDo">
+                <h1>LyricsDo</h1>
+                <p>Find the Lyrics of your favorite song and Keep Humming</p>
+                <div class="form-combine">
+                    <div class="form-group">
+                        <input type="text" id="searchlyrics" class="input-control" placeholder="Search" autofocus/>
+                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error message</small>
+                    </div>
+                    <button type="submit" class="btn" id="btn">Search</button>
+                </div>
+            </form>
+        </header>
+
+        
+
+        <ul class="lyricsResult" id="lyricsResult"></ul>
+        <div class="lyricsResult pt-0" id="lyricsRecommendation">
+
+        </div>
+        <div id="lyrics">
+           
+        </div>
+        
+    </section>
+
+    <script src="./scripts.js"></script>
+</body>
+</html>
