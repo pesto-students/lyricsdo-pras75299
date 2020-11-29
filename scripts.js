@@ -18,8 +18,6 @@ form.addEventListener("submit", (e) => {
   onChange();
 });
 
-
-
 function checkInputs() {
   const searchValue = searchLyrics.value.trim();
   if (searchValue === "") {
@@ -45,7 +43,6 @@ function onChange() {
   timeoutSuggest = setTimeout(suggestions, 300);
 }
 
-
 function suggestions() {
   recommedSection.innerHTML = "";
   let inputValue = searchLyrics.value;
@@ -54,21 +51,21 @@ function suggestions() {
   }
   const suggestionsUrl = suggestionsBaseURL + inputValue;
   fetch(suggestionsUrl)
-  .then(response => {
-    if(response.ok) {
-      return response.json()
-    } else {
-      Promise.reject('Something went wrong')
-    }
-  })
-  .then(dataSuggestions => {
-    let html = "";
-    if (dataSuggestions.data.length === 0) {
-      alert("No result Found, Please search for something else.");
-    }
-    dataSuggestions.data.forEach(function (item) {
-      if (item !== undefined) {
-        html += `<li>
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        Promise.reject("Something went wrong");
+      }
+    })
+    .then((dataSuggestions) => {
+      let html = "";
+      if (dataSuggestions.data.length === 0) {
+        alert("No result Found, Please search for something else.");
+      }
+      dataSuggestions.data.forEach(function (item) {
+        if (item !== undefined) {
+          html += `<li>
                     <div class="album-image">
                       <img src="${
                         item.album.cover_medium !== null
@@ -85,37 +82,36 @@ function suggestions() {
                     </a>
                     <button class="lyricsBtn">View Lyrics</button>
                   </li>`;
-      }
-    });
-    results.innerHTML = html;
-  })
-  .catch(error => console.log('error is', error));
-  
+        }
+      });
+      results.innerHTML = html;
+    })
+    .catch((error) => console.log("error is", error));
 }
 
 function showRecommendations(song) {
   const recommandationUrl = suggestionsBaseURL + song;
   fetch(recommandationUrl)
-  .then(response => {
-    if(response.ok) {
-      return response.json()
-    } else {
-      Promise.reject('Something went wrong')
-    }
-  })
-  .then(dataRecommand => {
-    let html = "";
-    dataRecommand.data.forEach(function (listOfRecommendations) {
-      if (
-        listOfRecommendations !== undefined ||
-        listOfRecommendations !== null
-      ) {
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        Promise.reject("Something went wrong");
+      }
+    })
+    .then((dataRecommand) => {
+      let html = "";
+      dataRecommand.data.forEach(function (listOfRecommendations) {
         if (
-          listOfRecommendations.album.title !== undefined &&
-          listOfRecommendations.title !== undefined &&
-          listOfRecommendations.artist.name !== undefined
+          listOfRecommendations !== undefined ||
+          listOfRecommendations !== null
         ) {
-          html += `<li>
+          if (
+            listOfRecommendations.album.title !== undefined &&
+            listOfRecommendations.title !== undefined &&
+            listOfRecommendations.artist.name !== undefined
+          ) {
+            html += `<li>
                     <div class="album-image">
                       <img src="${
                         listOfRecommendations.album.cover_medium !== null
@@ -134,32 +130,43 @@ function showRecommendations(song) {
                         listOfRecommendations.title
                       }</p>                      
                     </a>
-                    <button class="lyricsBtn" onclick="${getLyrics(listOfRecommendations.artist.name,
-                      listOfRecommendations.title)}">View Lyrics</button>
+                    <button class="lyricsBtn recommendlyricsbtn" data-artistname="${
+                      listOfRecommendations.artist.name
+                    }" data-titlename="${
+              listOfRecommendations.title
+            }">View Lyrics</button>
                   </li>`;
+          }
         }
-      }
-    });
-    recommedSection.innerHTML = html;
-  })
-  .catch(error => console.log('error is', error));
+      });
+      recommedSection.innerHTML = html;
+      let getbtn = document.querySelector(".recommendlyricsbtn");
+      getbtn.addEventListener("click", function () {
+        getLyrics(getbtn.dataset.artistname, getbtn.dataset.titlename);
+      });
+    })
+    .catch((error) => console.log("error is", error));
 }
 
 function getLyrics(artist, title) {
   console.log({ artist, title });
   recommedSection.innerHTML = "";
   results.innerHTML = "";
+  let lyricshtml = "";
   const lyricsUrl = apiUrl + artist + "/" + title;
   fetch(lyricsUrl)
-  .then(response => {
-    if(response.ok) {
-      return response.json()
-    } else {
-      Promise.reject('Something went wrong')
-    }
-  })
-  .then(data => {
-   console.log(`<pre>${data.lyrics}</pre>`)
-  })
-  .catch(error => console.log('error is', error));
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        Promise.reject("Something went wrong");
+      }
+    })
+    .then((data) => {
+      lyricshtml += `<pre>${data.lyrics}</pre>`;
+      console.log();
+    })
+    .catch((error) => console.log("error is", error));
+
+  lyricsDiv.innerHTML = lyricshtml;
 }
