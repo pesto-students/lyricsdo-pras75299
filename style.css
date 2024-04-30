@@ -168,9 +168,9 @@ p{
     font-size: 15px;
     display: block;
     margin: 0 auto;
-    box-shadow: #a7a7a7 0 3px 5px;
+    box-shadow: #a7a7a7 0 3px 10px;
     position: absolute;
-    bottom: 15px;
+    bottom: 0px;
     left: 0;
     right: 0;
 }
