@@ -11,7 +11,7 @@ body{
 .main-section{
     width: 100%;
     margin: 0 auto;
-    background-color: rebeccapurple;
+    background-color: transparent;
     color: white;
     display: flex;
     align-items: center;
@@ -132,10 +132,12 @@ p{
     color: #222;
     list-style: none;
     margin: 0px auto;
-    padding: 80px 0 0 0;
+    padding: 20px 0 0 0;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
+    max-width: 1280px;
     justify-content: center;
 }
 
@@ -194,4 +196,91 @@ p{
     display: flex;
     height: 120px;
     border-radius: 50%;
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1000;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Black with opacity */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border-radius: 8px;
+    width: 60%;
+    /* Adjust width as needed */
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 12px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+pre {
+    white-space: pre-wrap;
+    /* Ensure line breaks are respected */
+    word-wrap: break-word;
+    /* Ensure long words break correctly */
+    text-align: left;
+    /* Align lyrics to the left for readability */
+}
+
+
+.lyricsResult h3{
+    display: block;
+    margin-bottom: 20px;
+}
+.recommend-item {
+    background: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.recommend-item button{
+    margin-left: auto;
+    background-color: rgb(111, 124, 243);
+    color: #fff;
+    padding: 8px 8px;
+    border: none;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
 }

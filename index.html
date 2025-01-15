@@ -19,12 +19,15 @@
                 <p>Find the Lyrics of your favorite song and Keep Humming</p>
                 <div class="form-combine">
                     <div class="form-group">
-                        <input type="text" id="searchlyrics" class="input-control" placeholder="Search" autofocus />
+                        <input type="text" id="searchlyrics" class="input-control" placeholder="Search" autofocus
+                            aria-label="Search Lyrics" />
                         <i class="fas fa-check-circle"></i>
                         <i class="fas fa-exclamation-circle"></i>
                         <small>Error message</small>
                     </div>
-                    <button type="submit" class="btn" id="btn">Search</button>
+
+                    <button type="submit" class="btn" id="btn" aria-label="Search Button">Search</button>
+
                 </div>
             </form>
         </header>
@@ -32,13 +35,19 @@
 
 
         <ul class="lyricsResult" id="lyricsResult"></ul>
-        <div class="lyricsResult pt-0" id="lyricsRecommendation">
+        <div class="lyricsResult" id="lyricsRecommendation">
 
         </div>
         <div id="lyrics">
 
         </div>
+        <div id="lyricsModal" class="modal">
 
+            <div class="modal-content">
+
+                <div class="loader" style="display: none;">Loading...</div>
+            </div>
+        </div>
     </section>
 
     <script src="./scripts.js"></script>
