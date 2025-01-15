@@ -66,10 +66,15 @@ function setLoading(isLoading) {
   if (loader) loader.style.display = isLoading ? "block" : "none";
 }
 
+function clearRecommendations() {
+  recommendSection.innerHTML = "";
+}
+
 // Handle input changes for live search
 function onChange() {
   const searchTerm = searchLyrics.value.trim();
   if (searchTerm.length > 2) {
+    clearRecommendations(); // Clear recommendations when searching
     fetchSuggestions(searchTerm);
   } else {
     results.innerHTML = searchTerm
@@ -82,6 +87,7 @@ function onChange() {
 async function fetchSuggestions(query) {
   setLoading(true);
   try {
+    clearRecommendations(); // Ensure recommendations are cleared
     const response = await fetch(
       `${suggestionsBaseURL}${encodeURIComponent(query)}`
     );
