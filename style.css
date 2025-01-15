@@ -283,4 +283,5 @@ pre {
     font-size: 14px;
     border-radius: 6px;
     cursor: pointer;
+    text-transform: uppercase;
 }
